@@ -1,0 +1,37 @@
+version: '3'
+
+networks:
+  cluster:
+    external:
+      name: cluster
+
+services:
+  mongo-1:
+    container_name: "lab2-mongo-1"
+    networks:
+      cluster:
+        ipv4_address: 10.100.100.210
+        aliases:
+          - mongo_1
+    image: mongo
+
+  mongo-2:
+    container_name: "lab2-mongo-2"
+    networks:
+      cluster:
+        ipv4_address: 10.100.100.220
+        aliases:
+          - mongo_2
+    image: mongo
+
+  virt:
+    container_name: "py3"
+    networks:
+      cluster:
+        ipv4_address: 10.100.100.230
+        aliases:
+          - mongo_1_1
+    image: debian_vir
+    volumes:
+      - /home/q/PY3:/PY3
+    command: tail -f /etc/password > /dev/null
